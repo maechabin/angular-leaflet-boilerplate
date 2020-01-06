@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 
-import { LLMap } from '../domains/llmap/llmap';
+import { MapService } from './map.service';
 
 @Component({
   selector: 'app-map',
@@ -18,13 +18,16 @@ import { LLMap } from '../domains/llmap/llmap';
 })
 export class MapContainerComponent implements OnInit {
   private el: HTMLElement;
-  readonly map = new LLMap();
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(public mapService: MapService, private elementRef: ElementRef) {}
 
   ngOnInit() {
+    this.initMap();
+  }
+
+  private initMap() {
     this.el = this.elementRef.nativeElement;
     const mapElem = this.el.querySelector('.map') as HTMLElement;
-    this.map.initMap(mapElem);
+    this.mapService.initMap(mapElem);
   }
 }
